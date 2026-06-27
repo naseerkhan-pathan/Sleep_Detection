@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sleep Seeker | Drowsiness Monitor</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+    <main class="app-shell">
+        <header class="app-header">
+            <p class="eyebrow">Sleep Detection System</p>
+            <h1>AI Based Real-Time Sleep Detection System</h1>
+            <!-- <p class="subtitle">FaceMesh + EAR analysis + session analytics + configurable alert strategy</p> -->
+        </header>
+
+        <section class="layout-grid">
+            <article class="panel stream-panel">
+                <h2>Camera Stream</h2>
+                <div class="camera-wrap">
+                    <video id="video" autoplay playsinline></video>
+                </div>
+                <p id="status" class="status-pill status-pending">Calibrating camera and baseline...</p>
+            </article>
+
+            <article class="panel controls-panel">
+                <h2>Detection Controls</h2>
+
+                <label for="thresholdRange">Eye Closure Threshold (EAR)</label>
+                <div class="control-row">
+                    <input id="thresholdRange" type="range" min="0.15" max="0.35" step="0.01" value="0.23" />
+                    <span id="thresholdValue">0.23</span>
+                </div>
+
+                <label for="delayRange">Alert Delay (seconds)</label>
+                <div class="control-row">
+                    <input id="delayRange" type="range" min="1" max="5" step="0.5" value="2" />
+                    <span id="delayValue">2.0</span>
+                </div>
+
+                <label class="switch-row" for="alarmToggle">
+                    <input id="alarmToggle" type="checkbox" checked />
+                    <span>Alarm enabled</span>
+                </label>
+
+                <div class="button-row">
+                    <button id="recalibrateBtn" type="button">Recalibrate</button>
+                    <button id="downloadBtn" type="button">Download Session Report</button>
+                </div>
+            </article>
+        </section>
+
+        <section class="panel stats-panel">
+            <h2>Live Analytics</h2>
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <span class="stat-label">Current EAR</span>
+                    <span id="earValue" class="stat-value">--</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-label">Blinks</span>
+                    <span id="blinkCount" class="stat-value">0</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-label">Drowsy Events</span>
+                    <span id="drowsyEvents" class="stat-value">0</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-label">Drowsy Duration</span>
+                    <span id="drowsyDuration" class="stat-value">0.0s</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-label">Session Time</span>
+                    <span id="sessionDuration" class="stat-value">0.0s</span>
+                </div>
+            </div>
+        </section>
+
+        <section class="panel log-panel">
+            <h2>Event Log</h2>
+            <ul id="eventLog"></ul>
+        </section>
+    </main>
+
+    <audio id="alarm" src="horn.wav" preload="auto"></audio>
+
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/face_mesh/face_mesh.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils/camera_utils.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
